@@ -21,9 +21,12 @@ class Product:
     def set_quantity(self, quantity):
         """Setter function for quantity. If quantity reaches 0, deactivates the product."""
 
-        self.quantity -= quantity
+        if quantity < 0:
+            raise ValueError("Quantity cannot be negative.")
 
-        if self.quantity == 0:
+        self.quantity = quantity
+
+        if self.quantity <= 0:
             self.active = False
 
     def is_active(self) -> bool:
@@ -37,17 +40,20 @@ class Product:
         self.active = False
 
     def show(self) -> str:
+        """Returns a string representing the product details."""
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
     def buy(self, quantity) -> float:
         """Handles purchasing of a product. Decreases quantity and returns total cost."""
+        if quantity <= 0:
+            raise ValueError("Quantity to buy must be positive.")
 
         if quantity > self.quantity:
             raise ValueError("Not enough stock available.")
 
         total_price = self.price * quantity  # Calculate total cost of the purchase
 
-        self.set_quantity(quantity)  # Reduce the quantity after calculating total price
+        self.set_quantity(self.quantity - quantity)  # Use set_quantity to adjust and potentially deactivate
 
         return total_price
 
