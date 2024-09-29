@@ -2,7 +2,7 @@ import products
 import store
 from user_input import choice_input
 from active_inactive_list import get_active_list, print_active_list
-from shopping_list import get_order_list, calc_grant_total
+from shopping_list import get_order_list, calc_grand_total
 import sys
 
 
@@ -56,11 +56,11 @@ def start(store_object):
             print(shopping_list)
 
             if shopping_list:
-                grant_total = calc_grant_total(shopping_list)  # Use instance method
+                grand_total = calc_grand_total(shopping_list)  # Use instance method
 
                 print("*" * 10)
 
-                print(f"Order made! Total payment: {grant_total}\n")
+                print(f"Order made! Total payment: {grand_total}\n")
 
         if choice == "4":
             print()

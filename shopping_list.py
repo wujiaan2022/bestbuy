@@ -8,8 +8,10 @@ def get_order_list(store_object):
     order_list = []
 
     while True:
+
         order_id, order_quan = order_input(store_object)  # Get the product ID and quantity
-        print(f"\nDEBUG---The order_id and order_quan in get_order_list: {order_id}, {order_quan}")
+        # print(f"\nDEBUG---The order_id and order_quan in get_order_list: {order_id}, {order_quan}")
+
         # If the user presses Enter without input, break the loop and return the order list
         if not order_id or not order_quan:
             return order_list
@@ -19,7 +21,7 @@ def get_order_list(store_object):
         # Check if valid order ID and quantity were entered
         for product in active_list:
 
-            print(f"DEBUG---for product in active_list in get_order_list: {product}")
+            # print(f"DEBUG---for product in active_list in get_order_list: {product}")
 
             if str(order_id) == str(product[0]):  # Check if the product ID matches
                 order_name = product[1]
@@ -46,12 +48,12 @@ def get_order_list(store_object):
                 break
 
 
-def calc_grant_total(shopping_list) -> float:
+def calc_grand_total(shopping_list) -> float:
 
-    grant_total = 0
+    grand_total = 0
 
     for product, quantity in shopping_list:
-        grant_total += product.calc_each_total(int(quantity))
+        grand_total += product.calc_each_total(int(quantity))
 
-    return grant_total
+    return grand_total
 
