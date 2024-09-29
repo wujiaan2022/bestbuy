@@ -22,10 +22,7 @@ class Store:
     def get_all_products(self) -> list[products.Product]:
         """Returns all products in the store that are active."""
 
-        active_products = []
-        for product in self.products:
-            if product.is_active():  # Using the is_active() method to check activity
-                active_products.append(product)  # Append the product object itself
+        active_products = [product for product in self.products if product.is_active()]
         return active_products
 
     def order(self, shopping_list) -> float:

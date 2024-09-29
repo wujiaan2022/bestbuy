@@ -8,15 +8,23 @@ class Product:
             raise ValueError("Price cannot be negative.")
         self.price = float(price)
 
-        if float(quantity) < 0:
+        if int(quantity) < 0:
             raise ValueError("Quantity cannot be negative.")
-        self.quantity = float(quantity)
+        self.quantity = int(quantity)
 
         self.active = True
 
-    def get_quantity(self) -> float:
+    # Define __str__ for a human-readable string representation
+    def __str__(self):
+        return f"name={self.name}, price={self.price}, quantity={self.quantity}"
+
+    # Define __repr__ for an unambiguous representation (typically used for debugging)
+    def __repr__(self):
+        return f"name={self.name}, price={self.price}, quantity={self.quantity}"
+
+    def get_quantity(self) -> int:
         """Getter function for quantity, returns the quantity as a float."""
-        return float(self.quantity)
+        return int(self.quantity)
 
     def set_quantity(self, quantity):
         """Setter function for quantity. If quantity reaches 0, deactivates the product."""
@@ -43,7 +51,7 @@ class Product:
         """Returns a string representing the product details."""
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
-    def buy(self, quantity) -> float:
+    def buy(self, quantity) -> int:
         """Handles purchasing of a product. Decreases quantity and returns total cost."""
         if quantity <= 0:
             raise ValueError("Quantity to buy must be positive.")
