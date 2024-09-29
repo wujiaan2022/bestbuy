@@ -13,27 +13,24 @@ class Store:
 
     def get_total_quantity(self) -> int:
 
-        total_quantity =  0
+        total_quantity = 0
         for product in self.products:
             total_quantity += product.quantity
 
         return total_quantity
 
-    def get_all_products(self) -> list[products.Product]:
-        """Returns all products in the store that are active."""
+    def get_active_products(self):
+        """Returns all active products."""
 
         active_products = [product for product in self.products if product.is_active()]
         return active_products
 
-    def order(self, shopping_list) -> float:
+    def get_inactive_products(self):
+        """Returns all inactive products"""
 
-        total_price = 0
+        inactive_products = [product for product in self.products if not product.is_active()]
+        return inactive_products
 
-        for product, quantity in shopping_list:
-            if product in self.products and product.is_active():
-                total_price += product.buy(quantity)
-
-        return total_price
 
 
 

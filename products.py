@@ -22,17 +22,13 @@ class Product:
     def __repr__(self):
         return f"name={self.name}, price={self.price}, quantity={self.quantity}"
 
-    def get_quantity(self) -> int:
+    def get_stock_quan(self) -> int:
         """Getter function for quantity, returns the quantity as a float."""
         return int(self.quantity)
 
-    def set_quantity(self, quantity):
-        """Setter function for quantity. If quantity reaches 0, deactivates the product."""
+    def reduce_stock_deactivate(self, order_quan):
 
-        if quantity < 0:
-            raise ValueError("Quantity cannot be negative.")
-
-        self.quantity = quantity
+        self.quantity -= order_quan
 
         if self.quantity <= 0:
             self.active = False
@@ -51,19 +47,13 @@ class Product:
         """Returns a string representing the product details."""
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
-    def buy(self, quantity) -> int:
-        """Handles purchasing of a product. Decreases quantity and returns total cost."""
-        if quantity <= 0:
-            raise ValueError("Quantity to buy must be positive.")
+    def calc_each_total(self, order_quan):
 
-        if quantity > self.quantity:
-            raise ValueError("Not enough stock available.")
-
-        total_price = self.price * quantity  # Calculate total cost of the purchase
-
-        self.set_quantity(self.quantity - quantity)  # Use set_quantity to adjust and potentially deactivate
+        total_price = float(self.price) * int(order_quan)  # Calculate total cost for each product
 
         return total_price
+
+
 
 
 

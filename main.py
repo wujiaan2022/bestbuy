@@ -1,124 +1,17 @@
 import products
 import store
+from user_input import choice_input
+from active_inactive_list import get_active_list, print_active_list
+from shopping_list import get_order_list, calc_grant_total
 import sys
 
 
-# bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-# mac = Product("MacBook Air M2", price=1450, quantity=100)
-#
-# print(bose.buy(50))
-# print(mac.buy(100))
-# print(mac.is_active())
-#
-# bose.show()
-# mac.show()
-#
-# bose.set_quantity(1000)
-# bose.show()
-
-
-# product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
-#                 products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-#                 products.Product("Google Pixel 7", price=500, quantity=250),
-#                ]
-#
-# store = Store(product_list)
-# products = store.get_all_products()
-# print(store.get_total_quantity())
-# print(store.order([(products[0], 1), (products[1], 2)]))
-
-
-# setup initial stock of inventory
-product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
-                 products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                 products.Product("Google Pixel 7", price=500, quantity=250)
+product_list = [ products.Product("MacBook Air M2", price=1000, quantity=50),
+                 products.Product("Bose QuietComfort Earbuds", price=200, quantity=100),
+                 products.Product("Google Pixel 7", price=100, quantity=200)
                ]
 
 best_buy = store.Store(product_list)
-
-
-def get_active_list(store_object):
-
-    active_list = []
-    active_products = store_object.get_all_products()  # Always get the latest active products
-
-    for i, product in enumerate(active_products, start=1):
-        active_list.append((i, product))
-    return active_list
-
-
-def print_active_list(store_object):
-
-    active_list = get_active_list(store_object)
-    for product in active_list:
-        print(f"{product[0]}. {product[1]}")
-
-
-def choice_input(iterable):
-
-    while True:
-
-        try:
-            choice = input(f"Please choose a number between 1 - {len(iterable)}: ")
-
-            if choice:
-
-                if int(choice) not in range(1, len(iterable)+1):
-                    raise ValueError(f"You must enter a number between 1 - {len(iterable)}.")
-
-                return str(choice)
-
-            else:
-                return None
-
-        except ValueError as ve:
-            print(f"An error occurred in choice_menu: {ve}")
-        except Exception as e:
-            print(f"An unexpected error occurred in choice_menu: {e}")
-
-
-def order_input(store_object):
-
-    active_list = get_active_list(store_object)
-
-    try:
-        print("Which product # would you like to purchase? Press enter to quit or end your order.")
-        order_number = choice_input(active_list)
-        if order_number:
-            order_quantity = input("Please enter the amount or press enter to quit or end your order: ")
-            if order_quantity:
-                return str(order_number), int(order_quantity)
-            else:
-                return None, None
-        else:
-            return None, None
-
-    except ValueError as ve:
-        print(f"An error occurred in order_input: {ve}")
-    except Exception as e:
-        print(f"An unexpected error occurred in order_input: {e}")
-
-
-def get_order_list(store_object):
-    order_list = []
-    while True:
-        order_num, order_quan = order_input(store_object)
-        # print(order_num, order_quan)
-
-        active_list = get_active_list(store_object)
-        if order_num and order_quan:
-            for product in active_list:
-                # print(product)
-
-                if str(order_num) == str(product[0]):  # Check against the product index
-                    order_name = product[1]
-                    # print(order_name)
-
-                    order_list.append((order_name, order_quan))
-                    print("Product added to your shopping list!\n")
-                    break
-        else:
-            return order_list
 
 
 def start(store_object):
@@ -159,13 +52,15 @@ def start(store_object):
             print_active_list(store_object)
             print()
             shopping_list = get_order_list(store_object)
+            print("Your shoppinglist:")
+            print(shopping_list)
 
             if shopping_list:
-                total_price = store_object.order(shopping_list)  # Use instance method
+                grant_total = calc_grant_total(shopping_list)  # Use instance method
 
                 print("*" * 10)
 
-                print(f"Order made! Total payment: {total_price}\n")
+                print(f"Order made! Total payment: {grant_total}\n")
 
         if choice == "4":
             print()
