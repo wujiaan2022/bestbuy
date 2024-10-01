@@ -4,25 +4,33 @@ from products import Product
 from store import Store
 
 
+# Function: Retrieves the order list from the user input and updates the product quantities
 def get_order_list(store_object):
+    """
+    Retrieves the order list from the user by accepting product IDs and quantities.
+    Updates the product stock and status in the store.
+
+    Parameters:
+    store_object (Store): An instance of the Store class containing the products.
+
+    Returns:
+    list: A list of tuples where each tuple contains a product and the quantity ordered.
+    """
     order_list = []
 
     while True:
-
-        order_id, order_quan = order_input(store_object)  # Get the product ID and quantity
-        # print(f"\nDEBUG---The order_id and order_quan in get_order_list: {order_id}, {order_quan}")
+        # Get the product ID and quantity from user input
+        order_id, order_quan = order_input(store_object)
 
         # If the user presses Enter without input, break the loop and return the order list
         if not order_id or not order_quan:
             return order_list
 
-        active_list = get_active_list(store_object)  # Get the active product list from the store
+        # Get the active product list from the store
+        active_list = get_active_list(store_object)
 
         # Check if valid order ID and quantity were entered
         for product in active_list:
-
-            # print(f"DEBUG---for product in active_list in get_order_list: {product}")
-
             if str(order_id) == str(product[0]):  # Check if the product ID matches
                 order_name = product[1]
 
@@ -35,7 +43,7 @@ def get_order_list(store_object):
                         product_found = True
                         break  # Exit the loop once the product is found
 
-                # If the product was not found, append it outside the loop
+                # If the product was not found, append it to the list
                 if not product_found:
                     order_list.append((order_name, order_quan))
 
@@ -48,12 +56,21 @@ def get_order_list(store_object):
                 break
 
 
+# Function: Calculates the grand total of the products in the shopping list
 def calc_grand_total(shopping_list) -> float:
+    """
+    Calculates the grand total price of the products in the shopping list.
 
+    Parameters:
+    shopping_list (list): A list of tuples where each tuple contains a product and the quantity ordered.
+
+    Returns:
+    float: The grand total price for the ordered products.
+    """
     grand_total = 0
 
+    # Sum up the total price for each product in the shopping list
     for product, quantity in shopping_list:
         grand_total += product.calc_each_total(int(quantity))
 
     return grand_total
-
