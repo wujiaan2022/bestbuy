@@ -67,3 +67,5 @@ class Store:
         """
         inactive_products = [product for product in self.products if not product.is_active()]
         return inactive_products
+
+

@@ -24,7 +24,8 @@ class Product:
             raise ValueError("Quantity cannot be negative.")
         self.quantity = int(quantity)
 
-        self.active = True
+        # Update active status based on quantity
+        self.active = self.quantity > 0
 
     # Define __str__ for a human-readable string representation
     def __str__(self):
@@ -51,11 +52,18 @@ class Product:
 
     def reduce_stock_deactivate(self, order_quan):
         """
-        Reduces the stock by the specified order quantity and deactivates the product if the stock falls below or equals zero.
+        Reduces the stock by the specified order quantity and
+        deactivates the product if the stock falls below or equals zero.
 
         Parameters:
         order_quan (int): The quantity to be subtracted from the product's stock.
+
+        Raises:
+        ValueError: If the order quantity is greater than available stock.
         """
+        if order_quan > self.quantity:
+            raise ValueError("Cannot order more than available quantity.")
+
         self.quantity -= order_quan
 
         if self.quantity <= 0:
