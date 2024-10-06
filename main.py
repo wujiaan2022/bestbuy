@@ -86,15 +86,17 @@ def start(store_object):
 
 
 def main():
-
-    product_list = [products.Product("MacBook Air M2", price=1000, quantity=50),
-                    products.Product("Bose QuietComfort Earbuds", price=200, quantity=100),
-                    products.Product("Google Pixel 7", price=100, quantity=200)
+    product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
+                    products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+                    products.Product("Google Pixel 7", price=500, quantity=250),
+                    products.NonStockedProduct("Windows License", price=125),
+                    products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
                     ]
-
     best_buy = store.Store(product_list)
 
-    start(best_buy)
+    print(best_buy)
+
+    # start(best_buy)
 
 
 if __name__ == "__main__":

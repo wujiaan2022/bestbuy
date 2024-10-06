@@ -1,4 +1,3 @@
-# The Product class represents a product with attributes such as name, price, quantity, and active status.
 class Product:
     def __init__(self, name, price, quantity):
         """
@@ -39,7 +38,7 @@ class Product:
         """
         Returns an unambiguous string representation of the product, useful for debugging.
         """
-        return f"name={self.name}, price={self.price}, quantity={self.quantity}"
+        return f"Product(name={self.name!r}, price={self.price}, quantity={self.quantity})"
 
     def get_stock_quan(self) -> int:
         """
@@ -111,3 +110,30 @@ class Product:
         """
         total_price = float(self.price) * int(order_quan)  # Calculate total cost for each product
         return total_price
+
+
+class NonStockedProduct(Product):
+    def __init__(self, name, price):
+        # call the parent constructor with quantity set to 0.
+        super().__init__(name, price, 0)
+
+        # overwrite the status setting to make sure it is always active
+        self.active = True
+
+    # ignore any attempts to change quantity
+    def set_quantity(self, quantity):
+        pass
+
+    def show(self):
+        return f"Non-Stocked Product: {self.name}, Price: {self.price}"
+
+
+class LimitedProduct(Product):
+    def __init__(self, name, price, quantity, maximum):
+        super().__init__(name, price, quantity)
+        self.maximum = maximum
+
+    def show(self):
+        return f"Limited Product: {self.name}, Price: {self.price}"
+
+
