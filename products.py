@@ -1,7 +1,13 @@
+from promotions import Promotion, SecondHalfPrice, ThirdOneFree, PercentOff
+
+
 class Product:
+    """
+        The Product class represents a product with a name, price, and a promotion (optional).
+        """
     def __init__(self, name, price, quantity):
         """
-        Initializes a Product object with a name, price, quantity, and active status.
+        Initializes a Product object with a name, price, quantity, active status, and promotion.
 
         Parameters:
         name (str): The name of the product.
@@ -26,12 +32,19 @@ class Product:
         # Update active status based on quantity
         self.active = self.quantity > 0
 
+        # Promotion is initially None (no promotion applied)
+        self.promotion = None
+
     # Define __str__ for a human-readable string representation
     def __str__(self):
         """
-        Returns a human-readable string representation of the product.
+        String representation of the product, showing the name, price, and promotion (if any).
+
+        Returns:
+        str: String representation of the product.
         """
-        return f"name={self.name}, price={self.price}, quantity={self.quantity}"
+        promotion_name = f" with {self.promotion}" if self.promotion else " (No promotion)"
+        return f"Product: {self.name}, Price: {self.price}{promotion_name}"
 
     # Define __repr__ for an unambiguous representation (typically used for debugging)
     def __repr__(self):
@@ -89,26 +102,46 @@ class Product:
         """
         self.active = False
 
-    def show(self) -> str:
+        # Getter for the promotion
+    def get_promotion(self):
         """
-        Returns a formatted string displaying the product's details (name, price, quantity).
+        Get the current promotion applied to the product.
 
         Returns:
-        str: The string containing the product's details.
+        Promotion: The promotion object applied to the product, or None if no promotion is applied.
         """
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        return self.promotion
+
+    def set_promotion(self, promotion):
+        """
+        Set or update the promotion for the product.
+
+        Parameters:
+        promotion (Promotion): A Promotion object to apply to the product.
+        """
+        self.promotion = promotion
+
+    def show(self) -> str:
+        """
+        Calls the __str__ method to provide the same output.
+        """
+        return str(self)  # Calls __str__ internally
 
     def calc_each_total(self, order_quan):
         """
-        Calculates the total price based on the order quantity for the product.
+        Calculate the total price of the product, applying any active promotion.
 
         Parameters:
-        order_quan (int): The quantity of the product being ordered.
+        quantity (int): The quantity of the product being purchased.
 
         Returns:
-        float: The total price for the ordered quantity.
+        float: The total price after applying the promotion (if any).
         """
         total_price = float(self.price) * int(order_quan)  # Calculate total cost for each product
+
+        if self.promotion:
+            total_price = self.promotion.apply(total_price, order_quan)
+
         return total_price
 
 

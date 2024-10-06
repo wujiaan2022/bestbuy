@@ -57,15 +57,17 @@ def get_order_list(store_object):
 
 
 # Function: Calculates the grand total of the products in the shopping list
-def calc_grand_total(shopping_list) -> float:
+def calc_grand_total(shopping_list, percent_off_promotion=None) -> float:
     """
     Calculates the grand total price of the products in the shopping list.
+    Optionally applies a PercentOff promotion to the grand total.
 
     Parameters:
     shopping_list (list): A list of tuples where each tuple contains a product and the quantity ordered.
+    percent_off_promotion (PercentOff, optional): An optional PercentOff promotion to apply to the grand total.
 
     Returns:
-    float: The grand total price for the ordered products.
+    float: The grand total price after applying the promotion (if any).
     """
     grand_total = 0
 
@@ -73,4 +75,9 @@ def calc_grand_total(shopping_list) -> float:
     for product, quantity in shopping_list:
         grand_total += product.calc_each_total(int(quantity))
 
+    # If a percent_off promotion is provided, apply it to the grand total
+    if percent_off_promotion:
+        grand_total = percent_off_promotion.apply(grand_total, len(shopping_list))
+
     return grand_total
+
