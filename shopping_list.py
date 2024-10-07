@@ -75,9 +75,5 @@ def calc_grand_total(shopping_list, percent_off_promotion=None) -> float:
     for product, quantity in shopping_list:
         grand_total += product.calc_each_total(int(quantity))
 
-    # If a percent_off promotion is provided, apply it to the grand total
-    if percent_off_promotion:
-        grand_total = percent_off_promotion.apply(grand_total, len(shopping_list))
-
     return grand_total
 

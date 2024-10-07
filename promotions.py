@@ -95,12 +95,12 @@ class ThirdOneFree(Promotion):
 
 
 # Subclass for percentage discount promotion
-class PercentOff(Promotion):
+class PercentDiscount(Promotion):
     """
     A promotion where a percentage discount is applied to the grand total if a certain threshold is exceeded.
     """
 
-    def __init__(self, name, percent, exceed_limit):
+    def __init__(self, name, percent):
         """
         Initialize the PercentOff promotion with a name, discount percentage, and an exceed limit.
 
@@ -111,9 +111,8 @@ class PercentOff(Promotion):
         """
         super().__init__(name)
         self.percent = percent
-        self.exceed_limit = exceed_limit
 
-    def apply(self, grand_total, order_quan):
+    def apply(self, total_price, order_quan):
         """
         Apply the percentage discount promotion if the grand total exceeds the set limit.
 
@@ -124,8 +123,8 @@ class PercentOff(Promotion):
         Returns:
         float: The new grand total after applying the percentage discount, if applicable.
         """
-        if grand_total > self.exceed_limit:
-            discount = grand_total * self.percent / 100  # Calculate the percentage discount
-            grand_total -= discount
-        return grand_total
+
+        discount = total_price * self.percent / 100  # Calculate the percentage discount
+        total_price -= discount
+        return total_price
 

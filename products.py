@@ -1,4 +1,4 @@
-from promotions import Promotion, SecondHalfPrice, ThirdOneFree, PercentOff
+from promotions import Promotion, SecondHalfPrice, ThirdOneFree, PercentDiscount
 
 
 class Product:
@@ -148,7 +148,7 @@ class Product:
 class NonStockedProduct(Product):
     def __init__(self, name, price):
         # call the parent constructor with quantity set to 0.
-        super().__init__(name, price, 0)
+        super().__init__(name, price, quantity=10000)
 
         # overwrite the status setting to make sure it is always active
         self.active = True
