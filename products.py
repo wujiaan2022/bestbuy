@@ -35,6 +35,17 @@ class Product:
         # Promotion is initially None (no promotion applied)
         self.promotion = None
 
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, new_name):
+        if not new_name:
+            print("Can not change name to an empty name.")
+        else:
+            self._name = new_name
+
     # Define __str__ for a human-readable string representation
     def __str__(self):
         """
@@ -121,11 +132,11 @@ class Product:
         """
         self.promotion = promotion
 
-    def show(self) -> str:
-        """
-        Calls the __str__ method to provide the same output.
-        """
-        return str(self)  # Calls __str__ internally
+    # def show(self) -> str:
+    #     """
+    #     Calls the __str__ method to provide the same output.
+    #     """
+    #     return str(self)  # Calls __str__ internally
 
     def calc_each_total(self, order_quan):
         """
@@ -157,8 +168,15 @@ class NonStockedProduct(Product):
     def set_quantity(self, quantity):
         pass
 
-    def show(self):
-        return f"Non-Stocked Product: {self.name}, Price: {self.price}"
+    def __str__(self):
+        """
+        String representation of the product, showing the name, price, and promotion (if any).
+
+        Returns:
+        str: String representation of the product.
+        """
+        promotion_name = f" with {self.promotion}" if self.promotion else " (No promotion)"
+        return f"Non-Stocked Product: {self.name}, Price: {self.price}{promotion_name}"
 
 
 class LimitedProduct(Product):
@@ -166,7 +184,7 @@ class LimitedProduct(Product):
         super().__init__(name, price, quantity)
         self.maximum = maximum
 
-    def show(self):
+    def __str__(self):
         return f"Limited Product: {self.name}, Price: {self.price}"
 
 

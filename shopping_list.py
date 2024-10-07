@@ -1,7 +1,5 @@
 from user_input import order_input
-from active_inactive_list import get_active_list
-from products import Product
-from store import Store
+import store
 
 
 # Function: Retrieves the order list from the user input and updates the product quantities
@@ -27,7 +25,7 @@ def get_order_list(store_object):
             return order_list
 
         # Get the active product list from the store
-        active_list = get_active_list(store_object)
+        active_list = store.Store.get_active_list(store_object)
 
         # Check if valid order ID and quantity were entered
         for product in active_list:
@@ -57,7 +55,7 @@ def get_order_list(store_object):
 
 
 # Function: Calculates the grand total of the products in the shopping list
-def calc_grand_total(shopping_list, percent_off_promotion=None) -> float:
+def calc_grand_total(shopping_list) -> float:
     """
     Calculates the grand total price of the products in the shopping list.
     Optionally applies a PercentOff promotion to the grand total.

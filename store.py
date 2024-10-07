@@ -47,26 +47,30 @@ class Store:
         return total_quantity
 
     # Function: Returns a list of all active products in the store
-    def get_active_products(self):
-        """
-        Returns all active products in the store.
+    def get_active_list(self):
 
-        Returns:
-        list: A list of Product objects that are currently active.
-        """
+        active_list = []
         active_products = [product for product in self.products_lis if product.is_active()]
-        return active_products
+        for i, product in enumerate(active_products, start=1):
+            active_list.append((i, product))
+        return active_list
+
+    def print_active_list(self):
+        active_list = self.get_active_list()
+        if not active_list:
+            print("No active product available.")
+        else:
+            for i, product in active_list:  # Unpack the tuple (i, product)
+                print(f"{i}. {product}")  # Now this will call product.__str__()
 
     # Function: Returns a list of all inactive products in the store
-    def get_inactive_products(self):
-        """
-        Returns all inactive products in the store.
+    def get_inactive_list(self):
 
-        Returns:
-        list: A list of Product objects that are currently inactive.
-        """
+        inactive_list = []
         inactive_products = [product for product in self.products_lis if not product.is_active()]
-        return inactive_products
+        for i, product in enumerate(inactive_products, start=1):
+            inactive_list.append((i, product))
+        return inactive_list
 
 
 

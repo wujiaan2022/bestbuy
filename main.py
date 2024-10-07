@@ -2,7 +2,7 @@ import products
 import store
 import promotions
 from user_input import choice_input
-from active_inactive_list import get_active_list, print_active_list
+
 from shopping_list import get_order_list, calc_grand_total
 import sys
 
@@ -59,7 +59,7 @@ def start(store_object):
 
         if choice == "1":
             print()
-            print_active_list(store_object)
+            store.Store.print_active_list(store_object)
 
         elif choice == "2":
             print()
@@ -68,7 +68,7 @@ def start(store_object):
 
         elif choice == "3":
             print("\nProducts list:")
-            print_active_list(store_object)
+            store.Store.print_active_list(store_object)
             print()
             shopping_list = get_order_list(store_object)
             print("Your shoppinglist:")

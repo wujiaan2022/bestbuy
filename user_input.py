@@ -1,6 +1,5 @@
 from products import Product
 from store import Store
-from active_inactive_list import get_active_list, get_inactive_list, print_active_list, print_inactive_list
 
 
 # Function: Takes user input to choose a number corresponding to an option in an iterable.
@@ -48,7 +47,7 @@ def order_input(store_object):
     Raises:
     ValueError: If the user inputs an invalid quantity exceeding stock.
     """
-    active_list = get_active_list(store_object)
+    active_list = Store.get_active_list(store_object)
 
     try:
         while True:
