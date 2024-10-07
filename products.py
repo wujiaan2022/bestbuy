@@ -5,7 +5,7 @@ class Product:
     """
         The Product class represents a product with a name, price, and a promotion (optional).
         """
-    def __init__(self, name, price, quantity):
+    def __init__(self, name, price, quantity, **kwargs):
         """
         Initializes a Product object with a name, price, quantity, active status, and promotion.
 
@@ -17,23 +17,30 @@ class Product:
         Raises:
         ValueError: If the name is empty, or price/quantity is negative.
         """
-        if not name:
-            raise ValueError("Name cannot be empty.")
-        self.name = name
+        try:
+            if kwargs:
+                raise TypeError
 
-        if float(price) < 0:
-            raise ValueError("Price cannot be negative.")
-        self.price = float(price)
+            if not name:
+                raise ValueError("Name cannot be empty.")
+            self.name = name
 
-        if int(quantity) < 0:
-            raise ValueError("Quantity cannot be negative.")
-        self.quantity = int(quantity)
+            if float(price) < 0:
+                raise ValueError("Price cannot be negative.")
+            self.price = float(price)
 
-        # Update active status based on quantity
-        self.active = self.quantity > 0
+            if int(quantity) < 0:
+                raise ValueError("Quantity cannot be negative.")
+            self.quantity = int(quantity)
 
-        # Promotion is initially None (no promotion applied)
-        self.promotion = None
+            # Update active status based on quantity
+            self.active = self.quantity > 0
+
+            # Promotion is initially None (no promotion applied)
+            self.promotion = None
+
+        except TypeError:
+            print(f"Failed to add product {name} due to invalid arguments.")
 
     @property
     def name(self):
@@ -45,6 +52,19 @@ class Product:
             print("Can not change name to an empty name.")
         else:
             self._name = new_name
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, new_price):
+        try:
+            if float(new_price) < 0:
+                raise ValueError
+            self._price = float(new_price)
+        except ValueError:
+            print("Price cannot be negative.")
 
     # Define __str__ for a human-readable string representation
     def __str__(self):
@@ -154,6 +174,16 @@ class Product:
             total_price = self.promotion.apply(total_price, order_quan)
 
         return total_price
+
+    def __gt__(self, other):
+        if isinstance(other, Product):
+            return self.price > other.price
+        return NotImplemented
+
+    def __lt__(self, other):
+        if isinstance(other, Product):
+            return self.price < other.price
+        return NotImplemented
 
 
 class NonStockedProduct(Product):

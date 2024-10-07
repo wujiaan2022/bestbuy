@@ -72,6 +72,20 @@ class Store:
             inactive_list.append((i, product))
         return inactive_list
 
+    def __contains__(self, product):
+        return product in self.products_lis
 
+
+# mac = products.Product("MacBook Air M2", price=1450, quantity=100)
+# bose = products.Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+# pixel = products.Product("Google Pixel 7", price=500, quantity=250, maximum=1)
+#
+# best_buy = Store([mac, bose])
+# print(best_buy.products_lis)
+# mac.price = -100         # Should give error
+# print(mac)               # Should print `MacBook Air M2, Price: $1450 Quantity:100`
+# print(mac > bose)        # Should print True
+# print(mac in best_buy)   # Should print True
+# print(pixel in best_buy) # Should print False
 
 
